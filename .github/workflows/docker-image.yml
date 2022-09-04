@@ -35,6 +35,12 @@ jobs:
       
     - name: Test Backend
       run: docker-compose run back python manage.py test
+      env:
+        POSTGRES_DB: ${{ secrets.ENV_DB }}
+        POSTGRES_USER: ${{ secrets.ENV_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.ENV_PASSWORD }}
+        POSTGRES_PORT: ${{ secrets.ENV_PORT }}
+        POSTGRES_HOST: ${{ secrets.ENV_HOST }}
       
     - name: Test Frontend
       run: docker-compose run front npm test
