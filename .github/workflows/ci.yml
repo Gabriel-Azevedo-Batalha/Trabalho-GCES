@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build_test:
+    name: Build, Test and Lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Create env file
+      run: |
+        touch library_back/.env
+        echo POSTGRES_DB=${{ secrets.ENV_DB }} >> library_back/.env
+        echo POSTGRES_USER=${{ secrets.ENV_USER }} >> library_back/.env
+        echo POSTGRES_PASSWORD=${{ secrets.ENV_PASSWORD }} >> library_back/.env
+        echo POSTGRES_PORT=${{ secrets.ENV_PORT }} >> library_back/.env
+        echo POSTGRES_HOST=${{ secrets.ENV_HOST }} >> library_back/.env
+        cat library_back/.env
+    - name: Build
+      run: docker-compose up -d
+    - name: Run migrations
+      run: | 
+        docker-compose run back python manage.py makemigrations
+        docker-compose run back python manage.py migrate
+    - name: Test Backend
+      run: docker-compose run back python manage.py test
+    - name: Test Frontend
+      run: docker-compose run front npm test
+    - name: Lint Backend
+      run: docker-compose run back flake8 --ignore=E501 --exclude=/backend/env
+    - name: Lint Frontend
+      run: docker-compose run front npx eslint .
