@@ -34,3 +34,5 @@ jobs:
       run: docker-compose run front npm test
     - name: Lint Backend
       run: docker-compose run back flake8 --ignore=E501 --exclude=/backend/env
+    - name: Lint Frontend
+      run: docker-compose run front npx eslint .
