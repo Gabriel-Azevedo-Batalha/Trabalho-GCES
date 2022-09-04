@@ -8,8 +8,7 @@ on:
 
 jobs:
 
-  build:
-
+  build_test:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,13 +24,6 @@ jobs:
         cat library_back/.env
     - name: Build
       run: docker-compose up -d
-      
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-    - uses: actions/checkout@v3
     - name: Run migrations
       run: | 
         docker-compose run back python manage.py makemigrations
