@@ -8,7 +8,6 @@ on:
 
 jobs: 
   deploy_front:
-    needs: build_test
     name: Deploy Front
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +28,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_FRONT }}:latest
   deploy_back:
-    needs: build_test
     name: Deploy Back
     runs-on: ubuntu-latest
     steps:
