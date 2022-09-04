@@ -41,6 +41,10 @@ jobs:
         echo POSTGRES_PORT=${{ secrets.ENV_PORT }} >> library_back/.env
         echo POSTGRES_HOST=${{ secrets.ENV_HOST }} >> library_back/.env
         cat library_back/.env
+    - name: Run migrations
+      run: | 
+        docker-compose run back python manage.py makemigrations
+        docker-compose run back python manage.py migrate
     - name: Test Backend
       run: docker-compose run back python manage.py test
     - name: Test Frontend
