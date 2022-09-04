@@ -23,4 +23,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Test Backend
       run: docker-compose run back python manage.py test
+    - name: Test Frontend
+      run: docker-compose run front npm run test
   
