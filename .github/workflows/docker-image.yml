@@ -22,5 +22,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Test Backend
-      run: docker-compose run python manage.py test
+      run: docker-compose run back python manage.py test
   
