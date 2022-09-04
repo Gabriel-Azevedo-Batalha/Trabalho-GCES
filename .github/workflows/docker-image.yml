@@ -33,6 +33,4 @@ jobs:
     - name: Test Frontend
       run: docker-compose run front npm test
     - name: Lint Backend
-      run: |
-        docker-compose run back python -m pip install flake8
-        docker-compose run back python -m flake8
+      run: docker-compose run back flake8 --ignore=E501 --exclude=/backend/env
