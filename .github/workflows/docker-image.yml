@@ -32,3 +32,7 @@ jobs:
       run: docker-compose run back python manage.py test
     - name: Test Frontend
       run: docker-compose run front npm test
+    - name: Lint Backend
+      run: |
+        docker-compose run back python -m pip install flake8
+        docker-compose run back python -m flake8
