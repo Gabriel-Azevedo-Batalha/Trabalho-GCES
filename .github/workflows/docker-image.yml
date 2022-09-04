@@ -31,6 +31,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Test Frontend
-      run: docker-compose run front npm test --watchAll=false
+      run: docker-compose run front npm test
     - name: Test Backend
       run: docker-compose run back python manage.py test
